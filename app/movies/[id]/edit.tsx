@@ -5,26 +5,41 @@ import { useAddMovie } from '@/hooks/useAddMovie';
 import { useEditMovie } from '@/hooks/useEditMovie';
 import { storage } from '@/services/firebaseConfig';
 import * as ImagePicker from 'expo-image-picker';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Movies } from '@/hooks/useMovies';
+import { useMovie } from '@/hooks/useMovie';
 
 const Add = ({ item }: { item: Movies }) => {
+
+    const { id } = useLocalSearchParams<{ id: string }>();
+    const { data: movie } = useMovie(id);
     // usss
-    const [name, setName] = useState('');
-    const [type, setType] = useState('');
-    const [playtime, setPlaytime] = useState('');
-    const [rating, setRating] = useState('');
-    const [image, setImage] = useState('');
-    const [description, setDescription] = useState('');
+
+    const [name, setName] = useState(movie?.name || '');
+
+    const [type, setType] = useState(movie?.type || '');
+    const [playtime, setPlaytime] = useState(movie?.playtime || '');
+    const [rating, setRating] = useState(movie?.rating || '');
+    const [image, setImage] = useState(movie?.image || '');
+    const [description, setDescription] = useState(movie?.description || '');
 
     const { mutate: editMovie } = useEditMovie();
 
     const handleEdit = () => {
-        editMovie({ name, type, rating, image, description, id: item.id });
+
+        editMovie({
+            id: id, 
+            name,
+            type,
+            playtime,
+            rating,
+            image,
+            description
+        });
         router.back();
     };
 
@@ -61,6 +76,15 @@ const Add = ({ item }: { item: Movies }) => {
                     onChangeText={setRating}
                 />
             </View>
+            <View className="gap-1">
+                <Text className="text-purple-800 font-medium">Film Süresi</Text>
+                <TextInput
+                    className="border border-purple-200 p-4 rounded-2xl bg-white"
+                    placeholder="Filmin süresini giriniz"
+                    value={playtime}
+                    onChangeText={setPlaytime}
+                />
+            </View>
 
             <View className="gap-1">
                 <Text className="text-purple-800 font-medium">Film Posteri URL</Text>
@@ -76,14 +100,16 @@ const Add = ({ item }: { item: Movies }) => {
             <View className="gap-1">
                 <Text className="text-purple-800 font-medium">Film Açıklaması</Text>
                 <TextInput
-                    className="border border-purple-200 p-4 rounded-2xl bg-white h-32 text-align-top"
+                    className="border border-purple-200 p-4 rounded-2xl bg-white h-32"
                     placeholder="Film konusunu kısaca anlatın"
                     value={description}
                     onChangeText={setDescription}
+                    multiline
+                    textAlignVertical="top"
                 />
             </View>
 
-            <Button title="Film düzenle" className='bg-[#7c3aed]' onPress={handleEdit} />
+            <Button title="Filmi düzenle" className='bg-[#7c3aed]' onPress={handleEdit} />
         </SafeAreaView>
     );
 };

@@ -4,7 +4,7 @@ import { Button } from '@/components/Button';
 import { useDeleteMovie } from '@/hooks/useDeleteMovie';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { Text, TextInput, View, Image } from 'react-native';
+import { Text, TextInput, View, Image, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useEditMovie } from '@/hooks/useEditMovie';
 import { useMovie } from '@/hooks/useMovie';
@@ -14,33 +14,41 @@ const Index = () => {
     const { id } = useLocalSearchParams<{ id: string }>();
     const { data: movie } = useMovie(id);
 
-    // usss
-    const [name, setName] = useState('');
-    const [type, setType] = useState('');
-    const [playtime, setPlaytime] = useState('');
-    const [rating, setRating] = useState('');
-    const [image, setImage] = useState('');
-    const [description, setDescription] = useState('');
 
     const { mutate: editMovie } = useEditMovie();
     const { mutate: deleteMovie } = useDeleteMovie();
 
     const handleEdit = (id: string) => {
-        // editMovie({ name, type, rating, image, description, id: id });
         router.navigate(`/movies/${id}/edit`);
-        router.back();
     };
 
     const handleDelete = (id: string) => {
-        deleteMovie(id);
-        router.back();
+        Alert.alert(
+            'Filmi Sil',
+            'Bu filmi silmek istediğinizden emin misiniz?',
+            [
+                {
+                    text: 'İptal',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Evet, Sil',
+                    style: 'destructive',
+                    onPress: () => {
+                        deleteMovie(id);
+                        router.back();
+                    },
+                },
+            ],
+            { cancelable: true }
+        );
     };
 
 
 
     return (
         <SafeAreaView className="gap-4 px-6 bg-purple-50 h-screen">
-            <Image source={{ uri: movie?.image }} style={{ height: 200, width: "100%", borderRadius: 20 }} />
+            <Image source={{ uri: movie?.image }} style={{ height: 250, width: "100%", borderRadius: 20 }} />
 
 
             <Text className="text-xl font-bold text-purple-800">
@@ -65,8 +73,8 @@ const Index = () => {
 
             <View className='flex-row gap-4 pt-6'>
 
-                <Button title="Film düzenle" className='bg-[#7c3aed] flex-1' onPress={() => handleEdit(id)} />
-                <Button title="Film sil" className='bg-[#7c3aed] flex-1' onPress={() => handleDelete(id)} />
+                <Button title="Filmi düzenle" className='bg-[#7c3aed] flex-1' onPress={() => handleEdit(id)} />
+                <Button title="Filmi sil" className='bg-[#7c3aed] flex-1' onPress={() => handleDelete(id)} />
             </View>
         </SafeAreaView>
     );

@@ -42,7 +42,7 @@ export default function Layout() {
           <Stack.Screen
             name="movies/[id]/edit"
             options={{
-              title: 'Film Düzenle',
+              title: 'Filmi Düzenle',
             }}
           />
         </Stack>

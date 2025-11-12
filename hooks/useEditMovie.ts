@@ -16,9 +16,11 @@ export const useEditMovie = () => {
             const movieRef = doc(db, 'movies', movie.id);
             await updateDoc(movieRef, movie);
         },
-        onSuccess: () => {
+        onSuccess: (_data, movie) => {
             // 4. Tekrar data çekilsin diye cache temizlenir
-            queryClient.invalidateQueries({ queryKey: ['movies'] });
+            queryClient.invalidateQueries({ queryKey: ['movies', movie.id] });
+            queryClient.invalidateQueries({ queryKey: ["movies"]});
+
         },
     })
 

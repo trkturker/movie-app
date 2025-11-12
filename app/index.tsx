@@ -28,10 +28,10 @@ const Index = () => {
                 <View className=' '>
 
                   <Text className="text-base font-semibold text-purple-500">
-                    Type: <Text className="text-base font-normal  text-purple-500">{item.type}</Text>
+                    Tür: <Text className="text-base font-normal  text-purple-500">{item.type}</Text>
                   </Text>
                   <Text className="text-base font-semibold text-purple-500">
-                    Rating:  <Text className="text-base font-normal text-purple-500">{item.rating}</Text>
+                    Puan:  <Text className="text-base font-normal text-purple-500">{item.rating}</Text>
                   </Text>
                 </View>
 

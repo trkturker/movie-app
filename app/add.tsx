@@ -86,6 +86,9 @@ const Add = () => {
                     placeholder="Film konusunu kısaca anlatın"
                     value={description}
                     onChangeText={setDescription}
+                    multiline
+                    textAlignVertical="top"
+
                 />
             </View>
 

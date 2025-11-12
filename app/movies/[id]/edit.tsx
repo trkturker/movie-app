@@ -10,11 +10,13 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Movies } from '@/hooks/useMovies';
 
-const Add = () => {
+const Add = ({ item }: { item: Movies }) => {
     // usss
     const [name, setName] = useState('');
     const [type, setType] = useState('');
+    const [playtime, setPlaytime] = useState('');
     const [rating, setRating] = useState('');
     const [image, setImage] = useState('');
     const [description, setDescription] = useState('');
@@ -22,7 +24,7 @@ const Add = () => {
     const { mutate: editMovie } = useEditMovie();
 
     const handleEdit = () => {
-        editMovie({ name, type, rating, image, description});
+        editMovie({ name, type, rating, image, description, id: item.id });
         router.back();
     };
 

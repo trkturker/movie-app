@@ -14,7 +14,7 @@ const Index = () => {
         keyExtractor={(student) => student.id}
         renderItem={({ item }) => (
           <View key={item.id} className='p-4 font-sans'>
-            <TouchableOpacity onPress={() => router.push(`/movie-details/${item.id}`)} className="flex-row items-center pb-7 border-b border-purple-300">
+            <TouchableOpacity onPress={() => router.navigate(`/movies/${item.id}`)} className="flex-row items-center pb-7 border-b border-purple-300">
               <View className='rounded-3xl border-2 border-purple-500'>
                 <Image source={{ uri: item.image }} style={{ height: 100, width: 150, borderRadius: 20 }} />
               </View>

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Movies } from "./useMovies";
-import { addDoc, collection, deleteDoc } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/services/firebaseConfig";
 
 export const useDeleteMovie = () => {
@@ -12,10 +12,10 @@ export const useDeleteMovie = () => {
 
     return useMutation({
         // student without id gibi, id'yi ilgili tipten çıkarıp verir
-        mutationFn: async (movie: Omit<Movies, "id">) => {
+        mutationFn: async (id: string) => {
             // 3. Tablonun referansı için studentRef alıcaz ve addDoc işlemini yapacağız
-            const movieRef = collection(db, 'movies');
-            await deleteDoc(movieRef, movie);
+            const movieRef = doc(db, 'movies', id);
+            await deleteDoc(movieRef);   
         },
         onSuccess: () => {
             // 4. Tekrar data çekilsin diye cache temizlenir

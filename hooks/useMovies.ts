@@ -5,6 +5,7 @@ import { collection, getDocs } from 'firebase/firestore';
 export type Movies = {
     id: string;
     name: string;
+    playtime: string;
     image: string;
     rating: string;
     type: string;

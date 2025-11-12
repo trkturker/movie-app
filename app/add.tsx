@@ -14,6 +14,7 @@ const Add = () => {
     // usss
     const [name, setName] = useState('');
     const [type, setType] = useState('');
+    const [playtime, setPlaytime] = useState('');
     const [rating, setRating] = useState('');
     const [image, setImage] = useState('');
     const [description, setDescription] = useState('');
@@ -21,38 +22,8 @@ const Add = () => {
     const { mutate: addMovie } = useAddMovie();
 
     const handleAdd = () => {
-        addMovie({ name, type, rating, image, description });
+        addMovie({ name, type, rating, image, description});
         router.back();
-    };
-
-    const handlePick = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ['images'],
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 0.75,
-        });
-
-        if (!result.assets) {
-            alert('Henüz bir resim seçmediniz');
-            return;
-        }
-
-        // 1. Dosya yolunu verir
-        // file:///Zafer/Downloads/Simulator/asdasd.jpg
-        const imagePath = result.assets[0].uri;
-        // 2. byte object oluşturucaz (blob)
-        const response = await fetch(imagePath);
-        const blob = await response.blob();
-        // 3. Firebase için dosya storageRef oluşturucaz
-        const filename = imagePath.substring(imagePath.lastIndexOf('/') + 1);
-        const storageRef = ref(storage, filename);
-        // 4. byte dosyası karşıya atılır
-        await uploadBytes(storageRef, blob);
-        // 5. Dosya URL alınır ve state'e set edilir
-        const downloadUrl = await getDownloadURL(storageRef);
-        setImage(downloadUrl);
-        alert('Yükleme başarılı');
     };
 
 
@@ -75,6 +46,15 @@ const Add = () => {
                     placeholder="Örn: Aksiyon, Dram, Komedi"
                     value={type}
                     onChangeText={setType}
+                />
+            </View>
+            <View className="gap-1">
+                <Text className="text-purple-800 font-medium">Film Süresi</Text>
+                <TextInput
+                    className="border border-purple-200 p-4 rounded-2xl bg-white"
+                    placeholder="Örn: 1s 40dk"
+                    value={playtime}
+                    onChangeText={setPlaytime}
                 />
             </View>
 

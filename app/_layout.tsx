@@ -33,6 +33,18 @@ export default function Layout() {
               title: 'Film Ekle',
             }}
           />
+          <Stack.Screen
+            name="movies/[id]/index"
+            options={{
+              title: 'Film Detayı',
+            }}
+          />
+          <Stack.Screen
+            name="movies/[id]/edit"
+            options={{
+              title: 'Film Düzenle',
+            }}
+          />
         </Stack>
     </QueryClientProvider>
   );

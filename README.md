@@ -16,11 +16,9 @@ Bu proje, **ReactNative** , **Firebase**, **React Query**, **TailwindCSS** kulla
 ## 📸 Ekran Görüntüleri
 
 <img src="public/1.jpg" alt="Ekran 1" width="300"/>
-<br/>
 <img src="public/2.jpg" alt="Ekran 2" width="300"/>
 <br/>
 <img src="public/3.jpg" alt="Ekran 3" width="300"/>
-<br/>
 <img src="public/4.jpg" alt="Ekran 4" width="300"/>
 
 

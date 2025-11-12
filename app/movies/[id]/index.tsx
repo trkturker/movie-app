@@ -73,8 +73,8 @@ const Index = () => {
 
             <View className='flex-row gap-4 pt-6'>
 
-                <Button title="Filmi düzenle" className='bg-[#7c3aed] flex-1' onPress={() => handleEdit(id)} />
-                <Button title="Filmi sil" className='bg-[#7c3aed] flex-1' onPress={() => handleDelete(id)} />
+                <Button title="Filmi düzenle" className='bg-[#6b21a8] flex-1' onPress={() => handleEdit(id)} />
+                <Button title="Filmi sil" className='bg-[#6b21a8] flex-1' onPress={() => handleDelete(id)} />
             </View>
         </SafeAreaView>
     );

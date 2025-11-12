@@ -109,7 +109,7 @@ const Add = ({ item }: { item: Movies }) => {
                 />
             </View>
 
-            <Button title="Filmi düzenle" className='bg-[#7c3aed]' onPress={handleEdit} />
+            <Button title="Filmi düzenle" className='bg-[#6b21a8]' onPress={handleEdit} />
         </SafeAreaView>
     );
 };

@@ -22,7 +22,7 @@ const Add = () => {
     const { mutate: addMovie } = useAddMovie();
 
     const handleAdd = () => {
-        addMovie({ name, type, rating, image, description});
+        addMovie({ name, type, rating, image, description, playtime});
         router.back();
     };
 
@@ -92,7 +92,7 @@ const Add = () => {
                 />
             </View>
 
-            <Button title="Film ekle" className='bg-[#7c3aed]' onPress={handleAdd} />
+            <Button title="Film ekle" className='bg-[#6b21a8]' onPress={handleAdd} />
         </SafeAreaView>
     );
 };

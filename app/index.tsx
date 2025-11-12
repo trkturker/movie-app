@@ -15,8 +15,9 @@ const Index = () => {
         renderItem={({ item }) => (
           <View key={item.id} className='p-4 font-sans'>
             <TouchableOpacity onPress={() => router.navigate(`/movies/${item.id}`)} className="flex-row items-center pb-7 border-b border-purple-300">
-              <View className='rounded-3xl border-2 border-purple-500'>
-                <Image source={{ uri: item.image }} style={{ height: 100, width: 150, borderRadius: 20 }} />
+
+              <View className='rounded-3xl border-purple-500'>
+                <Image source={{ uri: item.image }} style={{ height: 100, width: 150, borderRadius: 18, borderColor: '#a855f7', borderWidth: 2 }} />
               </View>
 
               <View className='flex px-4 '>
@@ -35,6 +36,9 @@ const Index = () => {
                   </Text>
                 </View>
 
+                <Text className="text-base font-semibold text-purple-500">
+                  Süre:  <Text className="text-base font-normal text-purple-500">{item.playtime}</Text>
+                </Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -42,7 +46,7 @@ const Index = () => {
       />
 
       <Link href={'/add'} asChild>
-        <TouchableOpacity className="absolute bottom-12 right-4 h-16 w-16 items-center justify-center rounded-full bg-[#7c3aed] p-4">
+        <TouchableOpacity className="absolute bottom-12 right-4 h-16 w-16 items-center justify-center rounded-full bg-[#6b21a8] p-4">
           <Text className="text-2xl text-white">+</Text>
         </TouchableOpacity>
       </Link>

@@ -15,12 +15,12 @@ Bu proje, **ReactNative** , **Firebase**, **React Query**, **TailwindCSS** kulla
 
 ## 📸 Ekran Görüntüleri
 <p>
-<img src="public/1.jpg" alt="Ekran 1" width="300"/>
+<img src="public/1.jpg" alt="Ekran 1" width="300" style="margin-right: 10px;"/>
 <img src="public/2.jpg" alt="Ekran 2" width="300"/>
 </p>
 
 <p>
-<img src="public/3.jpg" alt="Ekran 3" width="300"/>
+<img src="public/3.jpg" alt="Ekran 3" width="300" style="margin-right: 10px;"/>
 <img src="public/4.jpg" alt="Ekran 4" width="300"/>
 </p>
 

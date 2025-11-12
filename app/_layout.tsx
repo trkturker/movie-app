@@ -3,6 +3,7 @@ import '../global.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Stack } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Layout() {
 
@@ -10,7 +11,29 @@ export default function Layout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Stack />
+        <Stack screenOptions={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#7c3aed',
+          },
+          headerTitleStyle: {
+            color: 'white',
+          },
+          headerTintColor: 'white',
+        }}>
+          <Stack.Screen
+            name="index"
+            options={{
+              title: 'Film Listesi',
+            }}
+          />
+          <Stack.Screen
+            name="add"
+            options={{
+              title: 'Film Ekle',
+            }}
+          />
+        </Stack>
     </QueryClientProvider>
   );
 }

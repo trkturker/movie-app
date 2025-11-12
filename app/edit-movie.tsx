@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/Button';
 import { useAddMovie } from '@/hooks/useAddMovie';
+import { useEditMovie } from '@/hooks/useEditMovie';
 import { storage } from '@/services/firebaseConfig';
 import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
@@ -18,42 +19,13 @@ const Add = () => {
     const [image, setImage] = useState('');
     const [description, setDescription] = useState('');
 
-    const { mutate: addMovie } = useAddMovie();
+    const { mutate: editMovie } = useEditMovie();
 
-    const handleAdd = () => {
-        addMovie({ name, type, rating, image, description });
+    const handleEdit = () => {
+        editMovie({ name, type, rating, image, description});
         router.back();
     };
 
-    const handlePick = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ['images'],
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 0.75,
-        });
-
-        if (!result.assets) {
-            alert('Henüz bir resim seçmediniz');
-            return;
-        }
-
-        // 1. Dosya yolunu verir
-        // file:///Zafer/Downloads/Simulator/asdasd.jpg
-        const imagePath = result.assets[0].uri;
-        // 2. byte object oluşturucaz (blob)
-        const response = await fetch(imagePath);
-        const blob = await response.blob();
-        // 3. Firebase için dosya storageRef oluşturucaz
-        const filename = imagePath.substring(imagePath.lastIndexOf('/') + 1);
-        const storageRef = ref(storage, filename);
-        // 4. byte dosyası karşıya atılır
-        await uploadBytes(storageRef, blob);
-        // 5. Dosya URL alınır ve state'e set edilir
-        const downloadUrl = await getDownloadURL(storageRef);
-        setImage(downloadUrl);
-        alert('Yükleme başarılı');
-    };
 
 
     return (
@@ -109,7 +81,7 @@ const Add = () => {
                 />
             </View>
 
-            <Button title="Film ekle" className='bg-[#7c3aed]' onPress={handleAdd} />
+            <Button title="Film düzenle" className='bg-[#7c3aed]' onPress={handleEdit} />
         </SafeAreaView>
     );
 };

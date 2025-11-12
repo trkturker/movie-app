@@ -2,15 +2,14 @@
 
 import { Button } from '@/components/Button';
 import { useAddMovie } from '@/hooks/useAddMovie';
+import { useDeleteMovie } from '@/hooks/useDeleteMovie';
 import { storage } from '@/services/firebaseConfig';
-import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import React, { useState } from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const Add = () => {
+const Add = ({item}: {item: Movies}) => {
     // usss
     const [name, setName] = useState('');
     const [type, setType] = useState('');
@@ -19,54 +18,24 @@ const Add = () => {
     const [description, setDescription] = useState('');
 
     const { mutate: addMovie } = useAddMovie();
+    const { mutate: deleteMovie } = useDeleteMovie();
 
     const handleAdd = () => {
         addMovie({ name, type, rating, image, description });
         router.back();
     };
 
-    const handlePick = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ['images'],
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 0.75,
-        });
-
-        if (!result.assets) {
-            alert('Henüz bir resim seçmediniz');
-            return;
-        }
-
-        // 1. Dosya yolunu verir
-        // file:///Zafer/Downloads/Simulator/asdasd.jpg
-        const imagePath = result.assets[0].uri;
-        // 2. byte object oluşturucaz (blob)
-        const response = await fetch(imagePath);
-        const blob = await response.blob();
-        // 3. Firebase için dosya storageRef oluşturucaz
-        const filename = imagePath.substring(imagePath.lastIndexOf('/') + 1);
-        const storageRef = ref(storage, filename);
-        // 4. byte dosyası karşıya atılır
-        await uploadBytes(storageRef, blob);
-        // 5. Dosya URL alınır ve state'e set edilir
-        const downloadUrl = await getDownloadURL(storageRef);
-        setImage(downloadUrl);
-        alert('Yükleme başarılı');
+    const handleDelete = () => {
+        deleteMovie({ name, type, rating, image, description });
+        router.back();
     };
+
 
 
     return (
         <SafeAreaView className="gap-4 p-4 bg-purple-50 h-screen">
-            <View className="gap-1">
-                <Text className="text-purple-800 font-medium">Film Adı</Text>
-                <TextInput
-                    className="border border-purple-200 p-4 rounded-2xl bg-white"
-                    placeholder="Film adı giriniz"
-                    value={name}
-                    onChangeText={setName}
-                />
-            </View>
+                  <Image source={{ uri: item.image }} style={{ height: 100, width: 150, borderRadius: 20 }} />
+
 
             <View className="gap-1">
                 <Text className="text-purple-800 font-medium">Film Türü</Text>
@@ -109,7 +78,8 @@ const Add = () => {
                 />
             </View>
 
-            <Button title="Film ekle" className='bg-[#7c3aed]' onPress={handleAdd} />
+            <Button title="Film düzenle" className='bg-[#7c3aed]' onPress={handleAdd} />
+            <Button title="Film sil" className='bg-[#7c3aed]' onPress={handleDelete} />
         </SafeAreaView>
     );
 };
